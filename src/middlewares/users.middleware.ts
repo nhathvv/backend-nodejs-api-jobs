@@ -61,3 +61,22 @@ export const registerValidator = validate(checkSchema({
     }
   }
 }, ['body']))
+export const loginValidator = validate(checkSchema({
+  email: {
+    notEmpty: true,
+    isEmail: true,
+    isLength: {
+      options: { min: 3, max: 100 }
+    },
+    trim: true,
+    errorMessage: 'Invalid email'
+  },
+  password: {
+    notEmpty: true,
+    isString: true,
+    isLength: {
+      options: { min: 6, max: 100 }
+    },
+    trim: true
+  }
+}, ['body']))

@@ -37,7 +37,7 @@ export const registerValidator = validate(checkSchema({
         'Password must be at least 8 characters long, contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 symbol'
     }
   },
-  confirm_password: {
+  confirmPassword: {
     notEmpty: true,
     isString: true,
     isLength: {

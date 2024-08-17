@@ -1,8 +1,8 @@
 import { Db, MongoClient, Collection } from 'mongodb'
 import { config } from 'dotenv'
 import { User } from '~/models/schemas/Users.schema'
-import { RefreshTokens } from '~/models/schemas/refreshTokens.schema'
 import { Creator } from '~/models/schemas/Creators.schema'
+import { RefreshTokens } from '~/models/schemas/RefreshTokens.schema'
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster.xhm85.mongodb.net/?retryWrites=true&w=majority&appName=Cluster`
 class DatabaseService {

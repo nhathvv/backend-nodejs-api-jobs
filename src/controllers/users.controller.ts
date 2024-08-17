@@ -31,3 +31,25 @@ export const loginController = async (req: Request<ParamsDictionary, any, LoginR
     })
   }
 }
+export const accessTokenController = async (req: Request, res: Response) => {
+  try {
+    const { decoded_authorization } = req
+    const user_id = decoded_authorization.user_id
+    if(!user_id) {
+      return res.status(400).json({
+        result: false,
+        message: 'Access token is invalid',
+      })
+    }
+    console.log('user_id', user_id)
+    return res.status(200).json({
+      result: true,
+      message: 'Access token is valid',
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({
+      message: 'Access token is invalid',
+    })
+  }
+}

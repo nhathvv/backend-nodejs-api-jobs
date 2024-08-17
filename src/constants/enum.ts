@@ -9,3 +9,7 @@ export enum Level {
   MIDDLE,
   SENIOR
 }
+export enum TokenTypes {
+  AccessToken,
+  RefreshToken,
+}

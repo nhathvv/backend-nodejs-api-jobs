@@ -1,5 +1,7 @@
+import { Request } from "express";
 import { checkSchema } from "express-validator";
 import { validate } from "~/utils/validation";
+import { verifyAccessToken } from "./common.middleware";
 
 export const registerValidator = validate(checkSchema({
   fullname: {
@@ -80,3 +82,18 @@ export const loginValidator = validate(checkSchema({
     trim: true
   }
 }, ['body']))
+export const accessTokenValidator = validate(
+  checkSchema(
+    {
+      Authorization: {
+        custom: {
+          options: async (value, { req }) => {
+            const access_token = (value || '').split(' ')[1]
+            await verifyAccessToken(access_token, req as Request)
+          }
+        }
+      }
+    },
+    ['headers']
+  )
+)

@@ -7,6 +7,7 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(cors())
 app.use('/users', userRouter)
+
 // Connect to MongoDB
 databaseService.connect()
 app.listen(port, () => {

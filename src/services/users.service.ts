@@ -12,7 +12,7 @@ class UserService {
     return signToken({
       payload: { user_id },
       options: {
-        expiresIn: '15m'
+        expiresIn: '5m'
       }
     })
   }

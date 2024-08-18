@@ -121,12 +121,6 @@ class UserService {
     if(!user) {
       throw new ErrorWithStatus({message: USERS_MESSAGES.USER_NOT_FOUND, status: HTTP_STATUS.NOT_FOUND})
     }
-    if(payload.email) {
-      const checkEmailExist = await databaseService.users.findOne({email: payload.email})
-      if(checkEmailExist) {
-        throw new ErrorWithStatus({message: USERS_MESSAGES.EMAIL_ALREADY_EXISTS, status: HTTP_STATUS.CONFLICT})
-      }
-    }
     await databaseService.users.updateOne({_id: new ObjectId(user_id)}, {
       $set: {
         email: payload.email,
@@ -141,7 +135,7 @@ class UserService {
     if(creator) {
       await databaseService.creators.updateOne({user_id: new ObjectId(user_id)}, {
         $set: {
-          skill_id: payload.skill_id,
+          skill_id: payload.skill,
           level: payload.level
         },
         $currentDate: { updated_at: true }

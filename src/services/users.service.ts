@@ -7,6 +7,9 @@ import { RefreshTokens } from "~/models/schemas/RefreshTokens.schema"
 import { LoginReqBody, RegisterReqBody } from "~/models/request/Users.request"
 import { Roles } from "~/constants/enum"
 import { Creator } from "~/models/schemas/Creators.schema"
+import USERS_MESSAGES from "~/constants/messages"
+import { ErrorWithStatus } from "~/models/Errors"
+import HTTP_STATUS from "~/constants/httpStatus"
 class UserService {
   private signAccessToken(user_id: string) {
     return signToken({
@@ -43,7 +46,7 @@ class UserService {
     const creator_id = result.insertedId.toString()
     await databaseService.users.updateOne({_id: new ObjectId(user_id)}, {
       $set: {
-        creator_id: new ObjectId(creator_id)
+        creator_id: new ObjectId(creator_id) as ObjectId
       }
     })
   }
@@ -84,6 +87,89 @@ class UserService {
       access_token,
       refresh_token
     }
+  }
+  async getMe(user_id: string) {
+    const [user] = await databaseService.users.aggregate([
+      {
+        '$match': {
+          '_id': new ObjectId(user_id)
+        }
+      },
+      {
+        '$lookup': {
+          'from': 'creators',
+          'localField': 'creator_id',
+          'foreignField': '_id',
+          'as': 'creator'
+        }
+      },
+      {
+        '$project': {
+          'password': 0,
+          'role': 0,
+          'creator_id': 0
+        }
+      }
+    ]).toArray();
+    if(!user) {
+      throw new ErrorWithStatus({message: USERS_MESSAGES.USER_NOT_FOUND, status: HTTP_STATUS.NOT_FOUND})
+    }
+    return user      
+  }
+  async updateMe(user_id: string, payload: any) {
+    const user = await databaseService.users.findOne({_id: new ObjectId(user_id)})
+    if(!user) {
+      throw new ErrorWithStatus({message: USERS_MESSAGES.USER_NOT_FOUND, status: HTTP_STATUS.NOT_FOUND})
+    }
+    if(payload.email) {
+      const checkEmailExist = await databaseService.users.findOne({email: payload.email})
+      if(checkEmailExist) {
+        throw new ErrorWithStatus({message: USERS_MESSAGES.EMAIL_ALREADY_EXISTS, status: HTTP_STATUS.CONFLICT})
+      }
+    }
+    await databaseService.users.updateOne({_id: new ObjectId(user_id)}, {
+      $set: {
+        email: payload.email,
+        fullname: payload.fullname,
+        address: payload.address,
+        avatar: payload.avatar,
+        phone: payload.phone
+      },
+      $currentDate: { updated_at: true }
+    })
+    const creator = await databaseService.creators.findOne({user_id: new ObjectId(user_id)})
+    if(creator) {
+      await databaseService.creators.updateOne({user_id: new ObjectId(user_id)}, {
+        $set: {
+          skill_id: payload.skill_id,
+          level: payload.level
+        },
+        $currentDate: { updated_at: true }
+      })
+    }
+    const [result] = await databaseService.users.aggregate([
+      {
+        '$match': {
+          '_id': new ObjectId(user_id)
+        }
+      },
+      {
+        '$lookup': {
+          'from': 'creators',
+          'localField': 'creator_id',
+          'foreignField': '_id',
+          'as': 'creator'
+        }
+      },
+      {
+        '$project': {
+          'password': 0,
+          'role': 0,
+          'creator_id': 0
+        }
+      }
+    ]).toArray();
+    return result
   }
 }
 const userService = new UserService()

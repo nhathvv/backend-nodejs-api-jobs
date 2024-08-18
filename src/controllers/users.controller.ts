@@ -18,3 +18,19 @@ export const loginController = async (req: Request<ParamsDictionary, any, LoginR
     data
   })
 }
+export const getMeController = async (req: Request, res: Response) => {
+  const user_id = req.decoded_authorization.user_id
+  const data = await userService.getMe(user_id)
+  return res.status(200).json({
+    message: USERS_MESSAGES.GET_ME_SUCCESS,
+    data
+  })
+}
+export const updateMeController = async (req: Request, res: Response) => {
+  const user_id = req.decoded_authorization.user_id
+  const data = await userService.updateMe(user_id, req.body)
+  return res.status(200).json({
+    message: USERS_MESSAGES.UPDATE_ME_SUCCESS,
+    data
+  })
+}

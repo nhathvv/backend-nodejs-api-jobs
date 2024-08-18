@@ -15,5 +15,7 @@ const USERS_MESSAGES = {
   USER_NOT_FOUND: 'User not found',
   REGISTER_SUCCESS: 'Register successfully',
   LOGIN_SUCCESS: 'Login successfully',
+  GET_ME_SUCCESS: 'Get me successfully',
+  UPDATE_ME_SUCCESS: 'Update me successfully'
 }
 export default USERS_MESSAGES

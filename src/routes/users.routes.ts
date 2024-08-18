@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {loginController, registerController } from "~/controllers/users.controller";
-import {loginValidator, registerValidator } from "~/middlewares/users.middleware";
+import {getMeController, loginController, registerController, updateMeController } from "~/controllers/users.controller";
+import {accessTokenValidator, loginValidator, registerValidator } from "~/middlewares/users.middleware";
 import { wrapRequestHandler } from "~/utils/handlers";
 const userRouter = Router();
 /**
@@ -18,9 +18,18 @@ userRouter.post("/register", registerValidator, registerController)
  */
 userRouter.post("/login", loginValidator, wrapRequestHandler(loginController))
 /**
- * Description: Verify access token
- * Path: /verify-access-token
- * Method: POST
- * Headers : {Authorization: Bearer <access_token>}
+ * Description: Get user info
+ * Path: /me
+ * Method: GET
+ * Headers: {Authorization: Bearer access_token}
+ *  */
+userRouter.get("/me", accessTokenValidator, wrapRequestHandler(getMeController))
+/**
+ * Description: Update user info
+ * Path: /me
+ * Method: PATCH
+ * Headers: {Authorization: Bearer access_token}
+ * Body : {fullname: string, email: string, Level: Levels, Phone: string, Skills}
  */
+userRouter.patch("/me", accessTokenValidator, wrapRequestHandler(updateMeController))
 export default userRouter;

@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { accessTokenController, loginController, registerController } from "~/controllers/users.controller";
-import { accessTokenValidator, loginValidator, registerValidator } from "~/middlewares/users.middleware";
+import {loginController, registerController } from "~/controllers/users.controller";
+import {loginValidator, registerValidator } from "~/middlewares/users.middleware";
+import { wrapRequestHandler } from "~/utils/handlers";
 const userRouter = Router();
 /**
  * Description: Register a new user
@@ -15,12 +16,11 @@ userRouter.post("/register", registerValidator, registerController)
  * Method: POST
  * Body : {email: string, password: string}
  */
-userRouter.post("/login", loginValidator, loginController)
+userRouter.post("/login", loginValidator, wrapRequestHandler(loginController))
 /**
  * Description: Verify access token
  * Path: /verify-access-token
  * Method: POST
  * Headers : {Authorization: Bearer <access_token>}
  */
-userRouter.post("/verify-access-token", accessTokenValidator, accessTokenController)
 export default userRouter;

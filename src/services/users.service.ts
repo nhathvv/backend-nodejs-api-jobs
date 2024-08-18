@@ -5,7 +5,7 @@ import { signToken } from "~/utils/jwt"
 import { ObjectId } from "mongodb"
 import { RefreshTokens } from "~/models/schemas/RefreshTokens.schema"
 import { LoginReqBody, RegisterReqBody } from "~/models/request/Users.request"
-import { Role } from "~/constants/enum"
+import { Roles } from "~/constants/enum"
 import { Creator } from "~/models/schemas/Creators.schema"
 class UserService {
   private signAccessToken(user_id: string) {
@@ -35,7 +35,7 @@ class UserService {
   })
   const result = await databaseService.users.insertOne(user)
   const user_id = result.insertedId.toString()
-  if(payload.role === Role.CREATOR) {
+  if(payload.role === Roles.CREATOR) {
     const creator = new Creator({
       user_id: new ObjectId(user_id),
     })

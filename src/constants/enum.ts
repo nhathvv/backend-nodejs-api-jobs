@@ -1,8 +1,8 @@
-export enum Role {
+export enum Roles {
   USER,
   CREATOR
 }
-export enum Level {
+export enum Levels {
   INTERN,
   FRESHER,
   JUNIOR,

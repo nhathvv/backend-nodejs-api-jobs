@@ -1,5 +1,5 @@
 import { ObjectId } from "mongodb";
-import { Role } from "~/constants/enum";
+import { Roles } from "~/constants/enum";
 interface UserType {
   _id?: ObjectId,
   fullname: string,
@@ -7,7 +7,7 @@ interface UserType {
   password: string,
   address?: string,
   companies_id?: ObjectId
-  role?: Role
+  role?: Roles
   creator_id?: ObjectId
   avatar?: string
   created_at?: Date
@@ -20,7 +20,7 @@ export class User {
   password: string
   address: string
   companies_id: ObjectId | null
-  role: Role
+  role: Roles
   creator_id: ObjectId | null
   avatar: string
   created_at: Date
@@ -33,7 +33,7 @@ export class User {
     this.password = user.password
     this.address = user.address || ''
     this.companies_id = user.companies_id || null,
-    this.role = user.role || Role.USER,
+    this.role = user.role || Roles.USER,
     this.creator_id = user.creator_id || null,
     this.avatar = user.avatar || ''
     this.created_at = user.created_at || date

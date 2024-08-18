@@ -1,11 +1,11 @@
 import { ObjectId } from "mongodb";
-import { Level } from "~/constants/enum";
+import { Levels } from "~/constants/enum";
 
 interface CreatorType {
   _id?: ObjectId,
   user_id : ObjectId
   skill_id? : ObjectId[]
-  level? : Level
+  level? : Levels
   rating? : string
   createdAt? : Date
   updatedAt? : Date
@@ -14,7 +14,7 @@ export class Creator {
   _id?: ObjectId
   user_id : ObjectId
   skill_id : ObjectId[] | null
-  level? : Level | null
+  level? : Levels | null
   rating? : string
   createdAt? : Date
   updatedAt? : Date

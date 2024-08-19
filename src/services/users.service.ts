@@ -2,7 +2,7 @@ import { hashPassword } from "~/utils/crypto"
 import databaseService from "./database.service"
 import { User } from "~/models/schemas/Users.schema"
 import { signToken } from "~/utils/jwt"
-import { ObjectId } from "mongodb"
+import { ObjectId, WithId } from "mongodb"
 import { RefreshTokens } from "~/models/schemas/RefreshTokens.schema"
 import { LoginReqBody, RegisterReqBody } from "~/models/request/Users.request"
 import { Roles } from "~/constants/enum"
@@ -10,20 +10,23 @@ import { Creator } from "~/models/schemas/Creators.schema"
 import USERS_MESSAGES from "~/constants/messages"
 import { ErrorWithStatus } from "~/models/Errors"
 import HTTP_STATUS from "~/constants/httpStatus"
+import { config } from 'dotenv'
+import { Skill } from "~/models/schemas/Skills.schema"
+config()
 class UserService {
   private signAccessToken(user_id: string) {
     return signToken({
       payload: { user_id },
       options: {
-        expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN
-      }
+        expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN as string
+      } 
     })
   }
   private signRefreshToken(user_id: string) {
     return signToken({
       payload: { user_id },
       options: {
-        expiresIn: process.env.JWT_REFRESH_TOKEN
+        expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN as string
       }
     })
   }
@@ -94,19 +97,24 @@ class UserService {
         '$match': {
           '_id': new ObjectId(user_id)
         }
-      },
-      {
+      }, {
         '$lookup': {
-          'from': 'creators',
-          'localField': 'creator_id',
-          'foreignField': '_id',
+          'from': 'creators', 
+          'localField': 'creator_id', 
+          'foreignField': '_id', 
           'as': 'creator'
         }
-      },
-      {
+      }, {
+        '$lookup': {
+          'from': 'skills', 
+          'localField': 'creator.skills', 
+          'foreignField': '_id', 
+          'as': 'skills'
+        }
+      }, {
         '$project': {
-          'password': 0,
-          'role': 0,
+          'password': 0, 
+          'role': 0, 
           'creator_id': 0
         }
       }
@@ -115,6 +123,18 @@ class UserService {
       throw new ErrorWithStatus({message: USERS_MESSAGES.USER_NOT_FOUND, status: HTTP_STATUS.NOT_FOUND})
     }
     return user      
+  }
+  async checkAndCreateSkill(skills : string[]) {
+    const skillDocuments = await Promise.all(
+      skills.map((skill) => {
+        return databaseService.skills.findOneAndUpdate(
+          { name: skill },
+          { $setOnInsert: new Skill({ name: skill }) },
+          { upsert: true, returnDocument: 'after' }
+        )
+      })
+    )
+    return skillDocuments.map((skill) => (skill as WithId<Skill>)._id)
   }
   async updateMe(user_id: string, payload: any) {
     const user = await databaseService.users.findOne({_id: new ObjectId(user_id)})
@@ -132,10 +152,11 @@ class UserService {
       $currentDate: { updated_at: true }
     })
     const creator = await databaseService.creators.findOne({user_id: new ObjectId(user_id)})
+    const skills = await this.checkAndCreateSkill(payload.skills)
     if(creator) {
       await databaseService.creators.updateOne({user_id: new ObjectId(user_id)}, {
         $set: {
-          skill_id: payload.skill,
+          skills: skills,
           level: payload.level
         },
         $currentDate: { updated_at: true }
@@ -146,19 +167,24 @@ class UserService {
         '$match': {
           '_id': new ObjectId(user_id)
         }
-      },
-      {
+      }, {
         '$lookup': {
-          'from': 'creators',
-          'localField': 'creator_id',
-          'foreignField': '_id',
+          'from': 'creators', 
+          'localField': 'creator_id', 
+          'foreignField': '_id', 
           'as': 'creator'
         }
-      },
-      {
+      }, {
+        '$lookup': {
+          'from': 'skills', 
+          'localField': 'creator.skills', 
+          'foreignField': '_id', 
+          'as': 'skills'
+        }
+      }, {
         '$project': {
-          'password': 0,
-          'role': 0,
+          'password': 0, 
+          'role': 0, 
           'creator_id': 0
         }
       }

@@ -3,6 +3,7 @@ import { config } from 'dotenv'
 import { User } from '~/models/schemas/Users.schema'
 import { Creator } from '~/models/schemas/Creators.schema'
 import { RefreshTokens } from '~/models/schemas/RefreshTokens.schema'
+import { Skill } from '~/models/schemas/Skills.schema'
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster.xhm85.mongodb.net/?retryWrites=true&w=majority&appName=Cluster`
 class DatabaseService {
@@ -28,6 +29,9 @@ class DatabaseService {
   }
   get creators(): Collection<Creator> {
     return this.db.collection(process.env.DB_COLLECTION_CREATOR as string)
+  }
+  get skills() : Collection<Skill> {
+    return this.db.collection(process.env.DB_COLLECTION_SKILL as string)
   }
 }
 

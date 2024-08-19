@@ -169,12 +169,13 @@ export const updateMeValidator = validate(checkSchema({
     },
     trim: true,
     custom: {
-      options: async (value) => {
+      options: async (value, { req }) => {
         const user = await databaseService.users.findOne({ email: value })
-        if (user) {
+        const user_id = req.decoded_authorization.user_id
+        if (user && user._id.toString() !== user_id) {
           throw new Error(USERS_MESSAGES.EMAIL_ALREADY_EXISTS)
         }
-        return true
+        return true        
       }
     }
   },

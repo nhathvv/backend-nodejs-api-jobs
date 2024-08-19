@@ -4,7 +4,7 @@ import { Levels } from "~/constants/enum";
 interface CreatorType {
   _id?: ObjectId,
   user_id : ObjectId
-  skill_id? : ObjectId[]
+  skills? : ObjectId[]
   level? : Levels
   description? : string
   rating? : string
@@ -14,7 +14,7 @@ interface CreatorType {
 export class Creator {
   _id?: ObjectId
   user_id : ObjectId
-  skill_id : ObjectId[] | null
+  skills : ObjectId[]
   level? : Levels | null
   rating? : string
   description? : string
@@ -23,7 +23,7 @@ export class Creator {
   constructor(creator: CreatorType) {
     const date = new Date()
     this._id = creator._id
-    this.skill_id = creator.skill_id || null
+    this.skills = creator.skills || []
     this.level = creator.level || null
     this.rating = creator.rating || ''
     this.description = creator.description || ''

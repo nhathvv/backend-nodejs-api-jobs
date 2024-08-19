@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import { verifyToken } from '~/utils/jwt'
 
 export const verifyAccessToken = async (access_token: string, req?: Request, res?: Response) => {
-  console.log('access_token', !access_token)
   if (!access_token) {
     return res!.status(401).json({
       message: 'Access token is required'
@@ -12,7 +11,6 @@ export const verifyAccessToken = async (access_token: string, req?: Request, res
     token: access_token,
     secretOrPublicKey: process.env.JWT_SECRET_ACCESS_TOKEN as string
   })
-  console.log('decoded_authorization', decoded_authorization)
   if (req) {
     req.decoded_authorization = decoded_authorization
     return true

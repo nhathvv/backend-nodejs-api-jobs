@@ -15,7 +15,7 @@ class UserService {
     return signToken({
       payload: { user_id },
       options: {
-        expiresIn: '5m'
+        expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRES_IN
       }
     })
   }
@@ -23,7 +23,7 @@ class UserService {
     return signToken({
       payload: { user_id },
       options: {
-        expiresIn: '100d'
+        expiresIn: process.env.JWT_REFRESH_TOKEN
       }
     })
   }

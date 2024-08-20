@@ -5,6 +5,7 @@ import { verifyAccessToken } from "./common.middleware";
 import USERS_MESSAGES from "~/constants/messages";
 import { hashPassword } from "~/utils/crypto";
 import databaseService from "~/services/database.service";
+import { Skill } from "~/models/request/Users.request";
 
 export const registerValidator = validate(checkSchema({
   fullname: {
@@ -155,6 +156,7 @@ export const accessTokenValidator = validate(
     ['headers']
   )
 )
+
 export const updateMeValidator = validate(checkSchema({
   email: {
     notEmpty: {
@@ -170,12 +172,12 @@ export const updateMeValidator = validate(checkSchema({
     trim: true,
     custom: {
       options: async (value, { req }) => {
-        const user = await databaseService.users.findOne({ email: value })
-        const user_id = req.decoded_authorization.user_id
+        const user = await databaseService.users.findOne({ email: value });
+        const user_id = req.decoded_authorization.user_id;
         if (user && user._id.toString() !== user_id) {
-          throw new Error(USERS_MESSAGES.EMAIL_ALREADY_EXISTS)
+          throw new Error(USERS_MESSAGES.EMAIL_ALREADY_EXISTS);
         }
-        return true        
+        return true;
       }
     }
   },
@@ -183,5 +185,13 @@ export const updateMeValidator = validate(checkSchema({
     isArray: {
       errorMessage: USERS_MESSAGES.SKILLS_MUST_BE_AN_ARRAY
     },
+    custom: {
+      options: (skills: Skill[]) => {
+        if (!skills.every((skill : any) => typeof skill === 'string')) {
+          throw new Error(USERS_MESSAGES.SKILL_NAME_MUST_BE_STRING);
+        }
+        return true;
+      }
+    }
   }
-}))
+}));

@@ -24,5 +24,7 @@ const USERS_MESSAGES = {
   QUANTITY_MUST_BE_A_NUMBER: 'Quantity must be a number',
   GET_JOB_SUCCESS: 'Get job successfully',
   SKILLS_MUST_BE_AN_ARRAY: 'Skills must be an array',
+  SKILLS_MUST_BE_STRINGS: 'Skill must be string',
+  SKILL_NAME_MUST_BE_STRING : 'Skill name must be string'
 }
 export default USERS_MESSAGES

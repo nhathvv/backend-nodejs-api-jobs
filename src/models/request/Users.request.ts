@@ -24,4 +24,10 @@ export interface TokenPayload extends JwtPayload {
   exp: number
   iat: number
 }
-
+export interface Skill {
+  _id? : string,
+  name : string,
+  description? : string,
+  createdAt? : Date,
+  updatedAt? : Date
+}

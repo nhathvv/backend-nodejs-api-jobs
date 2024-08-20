@@ -179,4 +179,9 @@ export const updateMeValidator = validate(checkSchema({
       }
     }
   },
+  skills: {
+    isArray: {
+      errorMessage: USERS_MESSAGES.SKILLS_MUST_BE_AN_ARRAY
+    },
+  }
 }))

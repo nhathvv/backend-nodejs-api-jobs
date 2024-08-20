@@ -4,12 +4,12 @@ import { JobTypes, Levels, JobStatus } from "~/constants/enum";
 interface JobType {
   _id?: ObjectId,
   name : string,
-  creator_id?: ObjectId,
+  user_id?: ObjectId,
   location: string,
   salary : number,
   quantity: number,
   level : Levels,
-  status :JobStatus,
+  status?: JobStatus,
   thumbnail: string,
   type : JobTypes,
   description : string,
@@ -22,12 +22,12 @@ interface JobType {
 export class Job {
   _id?: ObjectId
   name : string
-  creator_id?: ObjectId
+  user_id?: ObjectId
   location: string
   salary : number
   quantity: number
   level : Levels
-  status : JobStatus
+  status?: JobStatus
   thumbnail: string
   type : JobTypes
   description : string
@@ -40,12 +40,12 @@ export class Job {
     const date = new Date()
     this._id = job._id
     this.name = job.name
-    this.creator_id = job.creator_id
+    this.user_id = job.user_id
     this.location = job.location
     this.salary = job.salary
     this.quantity = job.quantity
     this.level = job.level
-    this.status = job.status
+    this.status = job.status || JobStatus.Active
     this.thumbnail = job.thumbnail
     this.type = job.type
     this.description = job.description

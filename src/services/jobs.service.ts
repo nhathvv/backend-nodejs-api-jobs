@@ -4,11 +4,11 @@ import { JobReqBody } from "~/models/request/Jobs.request";
 import { ObjectId } from "mongodb";
 
 class JobService {
-  async createJob(creator_id:string, payload : JobReqBody) {
+  async createJob(user_id:string, payload : JobReqBody) {
     const job = await databaseService.jobs.insertOne(
       new Job({
         ...payload,
-        creator_id : new ObjectId(creator_id)
+        user_id : new ObjectId(user_id)
       }),
     )
     return job

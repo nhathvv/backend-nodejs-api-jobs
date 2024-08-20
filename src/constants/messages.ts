@@ -22,5 +22,7 @@ const USERS_MESSAGES = {
   LOCATION_LENGTH_MUST_BE_FROM_3_TO_255: 'Location length must be from 3 to 255',
   SALARY_MUST_BE_A_NUMBER: 'Salary must be a number',
   QUANTITY_MUST_BE_A_NUMBER: 'Quantity must be a number',
+  GET_JOB_SUCCESS: 'Get job successfully',
+  SKILLS_MUST_BE_AN_ARRAY: 'Skills must be an array',
 }
 export default USERS_MESSAGES

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import USERS_MESSAGES from "~/constants/messages";
-import { LoginReqBody, RegisterReqBody } from "~/models/request/Users.request";
+import { LoginReqBody, RegisterReqBody, UpdateMeReqBody } from "~/models/request/Users.request";
 
 import userService from "~/services/users.service";
 export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {
@@ -26,7 +26,7 @@ export const getMeController = async (req: Request, res: Response) => {
     data
   })
 }
-export const updateMeController = async (req: Request, res: Response) => {
+export const updateMeController = async (req: Request<ParamsDictionary, any, UpdateMeReqBody>, res: Response) => {
   const user_id = req.decoded_authorization.user_id
   const data = await userService.updateMe(user_id, req.body)
   return res.status(200).json({

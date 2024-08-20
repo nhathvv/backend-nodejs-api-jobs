@@ -16,6 +16,11 @@ const USERS_MESSAGES = {
   REGISTER_SUCCESS: 'Register successfully',
   LOGIN_SUCCESS: 'Login successfully',
   GET_ME_SUCCESS: 'Get me successfully',
-  UPDATE_ME_SUCCESS: 'Update me successfully'
+  UPDATE_ME_SUCCESS: 'Update me successfully',
+  CREATE_JOB_SUCCESS: 'Create job successfully',
+  NAME_LENGTH_MUST_BE_FROM_3_TO_255: 'Name length must be from 3 to 255',
+  LOCATION_LENGTH_MUST_BE_FROM_3_TO_255: 'Location length must be from 3 to 255',
+  SALARY_MUST_BE_A_NUMBER: 'Salary must be a number',
+  QUANTITY_MUST_BE_A_NUMBER: 'Quantity must be a number',
 }
 export default USERS_MESSAGES

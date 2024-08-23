@@ -25,6 +25,16 @@ const USERS_MESSAGES = {
   GET_JOB_SUCCESS: 'Get job successfully',
   SKILLS_MUST_BE_AN_ARRAY: 'Skills must be an array',
   SKILLS_MUST_BE_STRINGS: 'Skill must be string',
-  SKILL_NAME_MUST_BE_STRING : 'Skill name must be string'
+  SKILL_NAME_MUST_BE_STRING : 'Skill name must be string',
+  UPDATE_JOB_SUCCESS: 'Update job successfully',
+  DELETE_JOB_SUCCESS: 'Delete job successfully',
+  GET_JOBS_SUCCESS: 'Get jobs successfully',
+  DESCRIPTION_LENGTH_MUST_BE_FROM_3_TO_500: 'Description length must be from 3 to 500',
+  END_DATE_MUST_BE_A_VALID_DATE: 'End date must be a valid date',
+  LEVEL_IS_INVALID: 'Level is invalid',
+  START_DATE_MUST_BE_A_VALID_DATE: 'Start date must be a valid date',
+  STATUS_IS_INVALID: 'Status is invalid',
+  TYPE_IS_INVALID: 'Type is invalid',
+  JOB_NOT_FOUND: 'Job not found',
 }
 export default USERS_MESSAGES

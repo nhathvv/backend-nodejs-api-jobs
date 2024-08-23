@@ -1,6 +1,5 @@
 import { ObjectId } from "mongodb";
 import { JobTypes, Levels, JobStatus } from "~/constants/enum";
-import { Dayjs } from "dayjs";
 interface JobType {
   _id?: ObjectId,
   name : string,

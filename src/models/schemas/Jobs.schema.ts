@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { JobTypes, Levels, JobStatus } from "~/constants/enum";
-
+import { Dayjs } from "dayjs";
 interface JobType {
   _id?: ObjectId,
   name : string,
@@ -13,7 +13,7 @@ interface JobType {
   thumbnail: string,
   type : JobTypes,
   description : string,
-  skills : string[],
+  skills : ObjectId[],
   start_date : Date,
   end_date : Date,
   created_at?: Date,
@@ -31,7 +31,7 @@ export class Job {
   thumbnail: string
   type : JobTypes
   description : string
-  skills : string[]
+  skills : ObjectId[]
   start_date : Date
   end_date : Date
   created_at?: Date
@@ -45,7 +45,7 @@ export class Job {
     this.salary = job.salary
     this.quantity = job.quantity
     this.level = job.level
-    this.status = job.status || JobStatus.Active
+    this.status = job.status || JobStatus.PENDING
     this.thumbnail = job.thumbnail
     this.type = job.type
     this.description = job.description

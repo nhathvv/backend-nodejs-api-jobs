@@ -21,7 +21,7 @@ interface JobType {
 export class Job {
   _id?: ObjectId
   name : string
-  user_id?: ObjectId
+  user?: ObjectId
   location: string
   salary : number
   quantity: number
@@ -39,7 +39,7 @@ export class Job {
     const date = new Date()
     this._id = job._id
     this.name = job.name
-    this.user_id = job.user_id
+    this.user = job.user_id
     this.location = job.location
     this.salary = job.salary
     this.quantity = job.quantity

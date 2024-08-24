@@ -2,8 +2,6 @@ import { Request, Response } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import USERS_MESSAGES from "~/constants/messages";
 import { LoginReqBody, RegisterReqBody, UpdateMeReqBody } from "~/models/request/Users.request";
-import databaseService from "~/services/database.service";
-import jobService from "~/services/jobs.service";
 
 import userService from "~/services/users.service";
 export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {

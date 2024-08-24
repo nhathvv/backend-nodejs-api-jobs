@@ -21,11 +21,6 @@ import { validate } from "~/utils/validation";
 export const JobReqValidator = validate(checkSchema({
  description : {
     isString: true,
-    notEmpty: true,
-    isLength: {
-      options: { min: 3, max: 500 },
-      errorMessage: USERS_MESSAGES.DESCRIPTION_LENGTH_MUST_BE_FROM_3_TO_500
-    },
   },
   end_date: {
     isISO8601: {

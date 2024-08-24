@@ -14,9 +14,8 @@ export enum TokenTypes {
   RefreshToken,
 }
 export enum JobStatus {
-  PENDING="PENDING",
-  APPROVED="APPROVED",
-  REJECTED="REJECTED",
+  ACTIVE="ACTIVE",
+  INACTIVE="INACTIVE",
 }
 export enum JobTypes {
   FULLTIME="FULLTIME",

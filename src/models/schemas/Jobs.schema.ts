@@ -44,7 +44,7 @@ export class Job {
     this.salary = job.salary
     this.quantity = job.quantity
     this.level = job.level
-    this.status = job.status || JobStatus.PENDING
+    this.status = job.status || JobStatus.INACTIVE
     this.thumbnail = job.thumbnail
     this.type = job.type
     this.description = job.description

@@ -87,6 +87,17 @@ class JobService {
           'foreignField': '_id', 
           'as': 'skills'
         }
+      }, {
+        '$lookup': {
+          'from': 'users', 
+          'localField': 'user_id', 
+          'foreignField': '_id', 
+          'as': 'user'
+        }
+      }, {
+        '$project': {
+          'user_id': 0
+        }
       }
     ]).toArray()
     const total = await databaseService.jobs.countDocuments()

@@ -159,6 +159,46 @@ class JobService {
       total
     }
   }
+  async search({ content, page, limit }: { content: string; page: number; limit: number }) {
+    const [jobs, total] = await Promise.all([
+      databaseService.jobs
+        .aggregate([
+          {
+            $match: {
+              name: {
+                $regex: content,
+                $options: 'i'
+              }
+            }
+          },
+          {
+            $skip: (page - 1) * limit
+          },
+          {
+            $limit: limit
+          },
+          {
+            $lookup: {
+              from: 'skills',
+              localField: 'skills',
+              foreignField: '_id',
+              as: 'skills'
+            }
+          }
+        ])
+        .toArray(),
+      databaseService.jobs.countDocuments({
+        name: {
+          $regex: content,
+          $options: 'i'
+        }
+      })
+    ])
+    return {
+      jobs,
+      total
+    }
+  }
 }
 const jobService = new JobService()
 export default jobService

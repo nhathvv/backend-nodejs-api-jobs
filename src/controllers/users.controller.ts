@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Request, Response } from "express"
 import { ParamsDictionary } from "express-serve-static-core"
 import USERS_MESSAGES from "~/constants/messages"
@@ -5,6 +6,15 @@ import { LoginReqBody, RegisterReqBody, UpdateMeReqBody } from "~/models/request
 import jobService from "~/services/jobs.service"
 
 import userService from "~/services/users.service"
+=======
+import { Request, Response } from 'express'
+import { ParamsDictionary } from 'express-serve-static-core'
+import USERS_MESSAGES from '~/constants/messages'
+import { LoginReqBody, RegisterReqBody, UpdateMeReqBody } from '~/models/request/Users.request'
+import jobService from '~/services/jobs.service'
+
+import userService from '~/services/users.service'
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
 export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {
   const data = await userService.register(req.body)
   return res.status(201).json({

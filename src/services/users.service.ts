@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { hashPassword } from "~/utils/crypto"
 import databaseService from "./database.service"
 import { User } from "~/models/schemas/Users.schema"
@@ -12,6 +13,22 @@ import { ErrorWithStatus } from "~/models/Errors"
 import HTTP_STATUS from "~/constants/httpStatus"
 import { config } from "dotenv"
 import { Skill } from "~/models/schemas/Skills.schema"
+=======
+import { hashPassword } from '~/utils/crypto'
+import databaseService from './database.service'
+import { User } from '~/models/schemas/Users.schema'
+import { signToken } from '~/utils/jwt'
+import { ObjectId, WithId } from 'mongodb'
+import { RefreshTokens } from '~/models/schemas/RefreshTokens.schema'
+import { LoginReqBody, RegisterReqBody } from '~/models/request/Users.request'
+import { Roles } from '~/constants/enum'
+import { Creator } from '~/models/schemas/Creators.schema'
+import USERS_MESSAGES from '~/constants/messages'
+import { ErrorWithStatus } from '~/models/Errors'
+import HTTP_STATUS from '~/constants/httpStatus'
+import { config } from 'dotenv'
+import { Skill } from '~/models/schemas/Skills.schema'
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
 config()
 class UserService {
   private signAccessToken(user_id: string) {
@@ -33,7 +50,11 @@ class UserService {
   async register(payload: RegisterReqBody) {
     const checkEmailExist = await databaseService.users.findOne({ email: payload.email })
     if (checkEmailExist) {
+<<<<<<< HEAD
       throw new Error("Email already exists")
+=======
+      throw new Error('Email already exists')
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
     }
     const user = new User({
       ...payload,
@@ -75,10 +96,17 @@ class UserService {
   async login(payload: LoginReqBody) {
     const user = await databaseService.users.findOne({ email: payload.email })
     if (!user) {
+<<<<<<< HEAD
       throw new Error("User not found")
     }
     if (user.password !== hashPassword(payload.password)) {
       throw new Error("Password is incorrect")
+=======
+      throw new Error('User not found')
+    }
+    if (user.password !== hashPassword(payload.password)) {
+      throw new Error('Password is incorrect')
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
     }
     const user_id = user._id.toString()
     const [access_token, refresh_token] = await Promise.all([
@@ -106,18 +134,32 @@ class UserService {
         },
         {
           $lookup: {
+<<<<<<< HEAD
             from: "creators",
             localField: "creator_id",
             foreignField: "_id",
             as: "creator"
+=======
+            from: 'creators',
+            localField: 'creator_id',
+            foreignField: '_id',
+            as: 'creator'
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
           }
         },
         {
           $lookup: {
+<<<<<<< HEAD
             from: "skills",
             localField: "creator.skills",
             foreignField: "_id",
             as: "skills"
+=======
+            from: 'skills',
+            localField: 'creator.skills',
+            foreignField: '_id',
+            as: 'skills'
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
           }
         },
         {
@@ -187,18 +229,32 @@ class UserService {
         },
         {
           $lookup: {
+<<<<<<< HEAD
             from: "creators",
             localField: "creator_id",
             foreignField: "_id",
             as: "creator"
+=======
+            from: 'creators',
+            localField: 'creator_id',
+            foreignField: '_id',
+            as: 'creator'
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
           }
         },
         {
           $lookup: {
+<<<<<<< HEAD
             from: "skills",
             localField: "creator.skills",
             foreignField: "_id",
             as: "skills"
+=======
+            from: 'skills',
+            localField: 'creator.skills',
+            foreignField: '_id',
+            as: 'skills'
+>>>>>>> 50cf6f3f2cda8911da45bb18228fef8a8137e831
           }
         },
         {

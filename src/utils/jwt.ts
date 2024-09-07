@@ -1,10 +1,10 @@
-import jwt, { SignOptions } from 'jsonwebtoken'
-import { TokenPayload } from '~/models/request/Users.request'
+import jwt, { SignOptions } from "jsonwebtoken"
+import { TokenPayload } from "~/models/request/Users.request"
 export const signToken = ({
   payload,
   privateKey = process.env.JWT_PRIVATE_KEY as string,
   options = {
-    algorithm: 'HS256'
+    algorithm: "HS256"
   }
 }: {
   payload: string | object | Buffer

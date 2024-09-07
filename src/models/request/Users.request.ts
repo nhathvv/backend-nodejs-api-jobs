@@ -11,12 +11,12 @@ export interface LoginReqBody {
   password: string
 }
 export interface UpdateMeReqBody {
-  fullname : string
-  email : string,
-  level : Levels,
-  skills : string[],
-  address : string,
-  phone : string,
+  fullname: string
+  email: string
+  level: Levels
+  skills: string[]
+  address: string
+  phone: string
 }
 export interface TokenPayload extends JwtPayload {
   user_id: string
@@ -25,9 +25,9 @@ export interface TokenPayload extends JwtPayload {
   iat: number
 }
 export interface Skill {
-  _id? : string,
-  name : string,
-  description? : string,
-  createdAt? : Date,
-  updatedAt? : Date
+  _id?: string
+  name: string
+  description?: string
+  createdAt?: Date
+  updatedAt?: Date
 }

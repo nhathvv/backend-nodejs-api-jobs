@@ -1,10 +1,10 @@
-import { Request, Response } from 'express'
-import { verifyToken } from '~/utils/jwt'
+import { Request, Response } from "express"
+import { verifyToken } from "~/utils/jwt"
 
 export const verifyAccessToken = async (access_token: string, req?: Request, res?: Response) => {
   if (!access_token) {
     return res!.status(401).json({
-      message: 'Access token is required'
+      message: "Access token is required"
     })
   }
   const decoded_authorization = await verifyToken({

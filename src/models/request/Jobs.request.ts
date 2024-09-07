@@ -1,17 +1,16 @@
-import { ObjectId } from "mongodb"
-import { JobStatus, JobTypes, Levels } from "~/constants/enum"
+import { JobStatus, JobTypes, Levels } from '~/constants/enum'
 
 export interface JobReqBody {
-  name : string
+  name: string
   location: string
-  salary : number
+  salary: number
   quantity: number
-  level : Levels
-  status : JobStatus
+  level: Levels
+  status: JobStatus
   thumbnail: string
-  type : JobTypes
-  description : string
-  skills : string[]
-  start_date : Date
-  end_date : Date
+  type: JobTypes
+  description: string
+  skills: string[]
+  start_date: Date
+  end_date: Date
 }

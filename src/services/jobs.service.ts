@@ -1,8 +1,8 @@
-import databaseService from './database.service'
-import { Job } from '~/models/schemas/Jobs.schema'
-import { JobReqBody } from '~/models/request/Jobs.request'
-import { ObjectId } from 'mongodb'
-import userService from './users.service'
+import databaseService from "./database.service"
+import { Job } from "~/models/schemas/Jobs.schema"
+import { JobReqBody } from "~/models/request/Jobs.request"
+import { ObjectId } from "mongodb"
+import userService from "./users.service"
 
 class JobService {
   async createJob(user_id: string, payload: JobReqBody) {
@@ -29,22 +29,22 @@ class JobService {
         }
       },
       {
-        returnDocument: 'after'
+        returnDocument: "after"
       }
     )
     const [result] = await databaseService.jobs
       .aggregate([
         {
           $match: {
-            _id: new ObjectId('66c87e389edafe49db773e8e')
+            _id: new ObjectId("66c87e389edafe49db773e8e")
           }
         },
         {
           $lookup: {
-            from: 'skills',
-            localField: 'skills',
-            foreignField: '_id',
-            as: 'skills'
+            from: "skills",
+            localField: "skills",
+            foreignField: "_id",
+            as: "skills"
           }
         }
       ])
@@ -68,10 +68,10 @@ class JobService {
         },
         {
           $lookup: {
-            from: 'skills',
-            localField: 'skills',
-            foreignField: '_id',
-            as: 'skills'
+            from: "skills",
+            localField: "skills",
+            foreignField: "_id",
+            as: "skills"
           }
         }
       ])
@@ -89,31 +89,71 @@ class JobService {
         },
         {
           $lookup: {
-            from: 'skills',
-            localField: 'skills',
-            foreignField: '_id',
-            as: 'skills'
+            from: "skills",
+            localField: "skills",
+            foreignField: "_id",
+            as: "skills"
           }
         },
         {
           $lookup: {
-            from: 'users',
-            localField: 'user',
-            foreignField: '_id',
-            as: 'user'
+            from: "users",
+            localField: "user",
+            foreignField: "_id",
+            as: "user"
           }
         },
         {
           $addFields: {
             user: {
-              $arrayElemAt: ['$user', 0]
+              $arrayElemAt: ["$user", 0]
             }
           }
         }
       ])
       .toArray()
     const total = await databaseService.jobs.countDocuments()
-    console.log('TOTAL::', total)
+    console.log("TOTAL::", total)
+    return {
+      jobs,
+      total
+    }
+  }
+  async search({ content, page, limit }: { content: string; page: number; limit: number }) {
+    const [jobs, total] = await Promise.all([
+      databaseService.jobs
+        .aggregate([
+          {
+            $match: {
+              name: {
+                $regex: content,
+                $options: "i"
+              }
+            }
+          },
+          {
+            $skip: (page - 1) * limit
+          },
+          {
+            $limit: limit
+          },
+          {
+            $lookup: {
+              from: "skills",
+              localField: "skills",
+              foreignField: "_id",
+              as: "skills"
+            }
+          }
+        ])
+        .toArray(),
+      databaseService.jobs.countDocuments({
+        name: {
+          $regex: content,
+          $options: "i"
+        }
+      })
+    ])
     return {
       jobs,
       total

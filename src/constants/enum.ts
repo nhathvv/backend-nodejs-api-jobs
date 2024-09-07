@@ -3,21 +3,21 @@ export enum Roles {
   CREATOR
 }
 export enum Levels {
-  INTERN="INTERN",
-  FRESHER="FRESHER",
-  JUNIOR="JUNIOR",
-  MIDDLE="MIDDLE",
-  SENIOR="SENIOR",
+  INTERN = "INTERN",
+  FRESHER = "FRESHER",
+  JUNIOR = "JUNIOR",
+  MIDDLE = "MIDDLE",
+  SENIOR = "SENIOR"
 }
 export enum TokenTypes {
   AccessToken,
-  RefreshToken,
+  RefreshToken
 }
 export enum JobStatus {
-  ACTIVE="ACTIVE",
-  INACTIVE="INACTIVE",
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE"
 }
 export enum JobTypes {
-  FULLTIME="FULLTIME",
-  PARTTIME="PARTTIME",
+  FULLTIME = "FULLTIME",
+  PARTTIME = "PARTTIME"
 }

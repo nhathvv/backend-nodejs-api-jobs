@@ -1,9 +1,15 @@
-import { Router } from "express";
-import { createJobController, deleteJobController, getJobByIDController, getJobsPaginationController, updateJobController } from "~/controllers/jobs.controllers";
-import { accessTokenValidator } from "~/middlewares/users.middleware";
-import { JobIdValidator, JobReqValidator, paginationValidator } from "~/middlewares/jobs.middleware";
-import { wrapRequestHandler } from "~/utils/handlers";
-const jobRouter = Router();
+import { Router } from "express"
+import {
+  createJobController,
+  deleteJobController,
+  getJobByIDController,
+  getJobsPaginationController,
+  updateJobController
+} from "~/controllers/jobs.controllers"
+import { accessTokenValidator } from "~/middlewares/users.middleware"
+import { JobIdValidator, JobReqValidator, paginationValidator } from "~/middlewares/jobs.middleware"
+import { wrapRequestHandler } from "~/utils/handlers"
+const jobRouter = Router()
 /**
  * Description : Create a new job
  * PATH : /
@@ -11,7 +17,7 @@ const jobRouter = Router();
  * Headers: {Authorization: Bearer access_token}
  * Body : JobReqBody
  */
-jobRouter.post("/", accessTokenValidator,wrapRequestHandler(createJobController))
+jobRouter.post("/", accessTokenValidator, wrapRequestHandler(createJobController))
 /**
  * Description : Update a job
  * PATH : /:jobId
@@ -19,14 +25,14 @@ jobRouter.post("/", accessTokenValidator,wrapRequestHandler(createJobController)
  * Headers: {Authorization: Bearer access_token}
  * Body : JobReqBody
  */
-jobRouter.patch("/:jobId", accessTokenValidator,wrapRequestHandler(updateJobController))
+jobRouter.patch("/:jobId", accessTokenValidator, wrapRequestHandler(updateJobController))
 /**
  * Description : Delete a job
  * PATH : /:jobId
  * Method : DELETE
  * Headers: {Authorization: Bearer access_token}
  */
-jobRouter.delete("/:jobId", accessTokenValidator,wrapRequestHandler(deleteJobController))
+jobRouter.delete("/:jobId", accessTokenValidator, wrapRequestHandler(deleteJobController))
 /**
  * Description : Get a job by id
  * PATH : /:jobId
@@ -43,4 +49,4 @@ jobRouter.get("/:jobId", accessTokenValidator, wrapRequestHandler(getJobByIDCont
  * Query : page, limit
  */
 jobRouter.get("/", paginationValidator, accessTokenValidator, wrapRequestHandler(getJobsPaginationController))
-export default jobRouter;
+export default jobRouter

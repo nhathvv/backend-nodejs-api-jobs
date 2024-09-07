@@ -1,5 +1,5 @@
-import { Router, Request } from "express";
-declare module 'express' {
+import { Router, Request } from "express"
+declare module "express" {
   interface Request {
     user?: User
     decoded_authorization?: TokenPayload

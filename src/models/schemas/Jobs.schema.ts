@@ -1,38 +1,38 @@
-import { ObjectId } from "mongodb";
-import { JobTypes, Levels, JobStatus } from "~/constants/enum";
+import { ObjectId } from "mongodb"
+import { JobTypes, Levels, JobStatus } from "~/constants/enum"
 interface JobType {
-  _id?: ObjectId,
-  name : string,
-  user_id?: ObjectId,
-  location: string,
-  salary : number,
-  quantity: number,
-  level : Levels,
-  status?: JobStatus,
-  thumbnail: string,
-  type : JobTypes,
-  description : string,
-  skills : ObjectId[],
-  start_date : Date,
-  end_date : Date,
-  created_at?: Date,
+  _id?: ObjectId
+  name: string
+  user_id?: ObjectId
+  location: string
+  salary: number
+  quantity: number
+  level: Levels
+  status?: JobStatus
+  thumbnail: string
+  type: JobTypes
+  description: string
+  skills: ObjectId[]
+  start_date: Date
+  end_date: Date
+  created_at?: Date
   updated_at?: Date
 }
 export class Job {
   _id?: ObjectId
-  name : string
+  name: string
   user?: ObjectId
   location: string
-  salary : number
+  salary: number
   quantity: number
-  level : Levels
+  level: Levels
   status?: JobStatus
   thumbnail: string
-  type : JobTypes
-  description : string
-  skills : ObjectId[]
-  start_date : Date
-  end_date : Date
+  type: JobTypes
+  description: string
+  skills: ObjectId[]
+  start_date: Date
+  end_date: Date
   created_at?: Date
   updated_at?: Date
   constructor(job: JobType) {

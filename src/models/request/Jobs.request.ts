@@ -1,4 +1,4 @@
-import { JobStatus, JobTypes, Levels } from '~/constants/enum'
+import { JobStatus, JobTypes, Levels } from "~/constants/enum"
 
 export interface JobReqBody {
   name: string

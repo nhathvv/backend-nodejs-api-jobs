@@ -173,6 +173,7 @@ class JobService {
       ])
       .toArray()
     return jobs
+<<<<<<< HEAD
   }
   async searchBySkill({ skill_type, page, limit }: { skill_type: string; limit: number; page: number }) {
     console.log("SKILL_TYPE", skill_type)
@@ -240,6 +241,8 @@ class JobService {
       .toArray()
     console.log("JOBS", jobs)
     return jobs[0]
+=======
+>>>>>>> 2d265b6a88bd04869f6a87047951ec76dfde66b8
   }
 }
 const jobService = new JobService()

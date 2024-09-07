@@ -62,3 +62,13 @@ export const searchController = async (req: Request<ParamsDictionary, any, any>,
     data
   })
 }
+export const searchBySkillController = async (req: Request<ParamsDictionary, any, any>, res: Response) => {
+  const skill_type = req.query.skill_type as string
+  const limit = Number(req.query.limit)
+  const page = Number(req.query.page)
+  const data = await jobService.searchBySkill({ skill_type, limit, page })
+  return res.status(200).json({
+    message: USERS_MESSAGES.SEARCH_SUCCESS,
+    data
+  })
+}

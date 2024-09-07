@@ -3,6 +3,7 @@ import { Job } from "~/models/schemas/Jobs.schema"
 import { JobReqBody } from "~/models/request/Jobs.request"
 import { ObjectId } from "mongodb"
 import userService from "./users.service"
+import { add } from "lodash"
 
 class JobService {
   async createJob(user_id: string, payload: JobReqBody) {
@@ -147,6 +148,13 @@ class JobService {
           }
         },
         {
+          $addFields: {
+            user: {
+              $arrayElemAt: ["$user", 0]
+            }
+          }
+        },
+        {
           $project: {
             user: {
               password: 0,
@@ -165,6 +173,73 @@ class JobService {
       ])
       .toArray()
     return jobs
+  }
+  async searchBySkill({ skill_type, page, limit }: { skill_type: string; limit: number; page: number }) {
+    console.log("SKILL_TYPE", skill_type)
+    const jobs = await databaseService.skills
+      .aggregate([
+        {
+          $match: {
+            name: skill_type
+          }
+        },
+        {
+          $lookup: {
+            from: "jobs",
+            localField: "_id",
+            foreignField: "skills",
+            as: "jobs"
+          }
+        },
+        {
+          $skip: (page - 1) * limit
+        },
+        {
+          $limit: limit
+        },
+        {
+          $lookup: {
+            from: "skills",
+            localField: "jobs.skills",
+            foreignField: "_id",
+            as: "skills"
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "jobs.user",
+            foreignField: "_id",
+            as: "user"
+          }
+        },
+        {
+          $addFields: {
+            user: {
+              $arrayElemAt: ["$user", 0]
+            }
+          }
+        },
+        {
+          $project: {
+            user: {
+              password: 0,
+              role: 0,
+              creator_id: 0,
+              email: 0,
+              address: 0,
+              avatar: 0,
+              created_at: 0,
+              updated_at: 0,
+              phone: 0,
+              companies_id: 0
+            }
+          }
+        }
+      ])
+      .toArray()
+    console.log("JOBS", jobs)
+    return jobs[0]
   }
 }
 const jobService = new JobService()

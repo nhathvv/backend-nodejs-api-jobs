@@ -1,8 +1,7 @@
 import { Router } from "express"
-import { searchController } from "~/controllers/jobs.controllers"
+import { searchBySkillController, searchController } from "~/controllers/jobs.controllers"
 import { paginationValidator } from "~/middlewares/jobs.middleware"
 import { searchValidator } from "~/middlewares/search.middleware"
-import { accessTokenValidator } from "~/middlewares/users.middleware"
 import { wrapRequestHandler } from "~/utils/handlers"
 const searchRouter = Router()
 /**
@@ -13,4 +12,11 @@ const searchRouter = Router()
  * Headers : {Authorization : Bearer <access_token>}
  */
 searchRouter.get("/", searchValidator, wrapRequestHandler(searchController))
+/**
+ * Description. Search by skill
+ * Path: /search/skills
+ * Method: GET
+ * Query : {query : string, limit: string, page: string}
+ */
+searchRouter.get("/skills", paginationValidator, wrapRequestHandler(searchBySkillController))
 export default searchRouter

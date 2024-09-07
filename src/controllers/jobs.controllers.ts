@@ -56,16 +56,9 @@ export const getJobsPaginationController = async (req: Request<ParamsDictionary,
 }
 export const searchController = async (req: Request<ParamsDictionary, any, any>, res: Response) => {
   const content = req.query.content as string
-  const page = Number(req.query.page)
-  const limit = Number(req.query.limit)
-  const { jobs, total } = await jobService.search({ content, page, limit })
+  const data = await jobService.search({ content })
   return res.status(200).json({
     message: USERS_MESSAGES.SEARCH_SUCCESS,
-    data: {
-      page,
-      limit,
-      total_page: Math.ceil(total / limit),
-      jobs
-    }
+    data
   })
 }

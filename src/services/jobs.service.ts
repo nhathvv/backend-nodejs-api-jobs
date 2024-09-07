@@ -119,45 +119,52 @@ class JobService {
       total
     }
   }
-  async search({ content, page, limit }: { content: string; page: number; limit: number }) {
-    const [jobs, total] = await Promise.all([
-      databaseService.jobs
-        .aggregate([
-          {
-            $match: {
-              name: {
-                $regex: content,
-                $options: "i"
-              }
-            }
-          },
-          {
-            $skip: (page - 1) * limit
-          },
-          {
-            $limit: limit
-          },
-          {
-            $lookup: {
-              from: "skills",
-              localField: "skills",
-              foreignField: "_id",
-              as: "skills"
+  async search({ content }: { content: string }) {
+    const jobs = await databaseService.jobs
+      .aggregate([
+        {
+          $match: {
+            name: {
+              $regex: content,
+              $options: "i"
             }
           }
-        ])
-        .toArray(),
-      databaseService.jobs.countDocuments({
-        name: {
-          $regex: content,
-          $options: "i"
+        },
+        {
+          $lookup: {
+            from: "skills",
+            localField: "skills",
+            foreignField: "_id",
+            as: "skills"
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "user",
+            foreignField: "_id",
+            as: "user"
+          }
+        },
+        {
+          $project: {
+            user: {
+              password: 0,
+              role: 0,
+              creator_id: 0,
+              email: 0,
+              address: 0,
+              avatar: 0,
+              created_at: 0,
+              updated_at: 0,
+              phone: 0,
+              companies_id: 0
+            }
+          }
         }
-      })
-    ])
-    return {
-      jobs,
-      total
-    }
+      ])
+      .toArray()
+    return jobs
   }
 }
 const jobService = new JobService()

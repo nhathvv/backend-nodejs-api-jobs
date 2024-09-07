@@ -12,5 +12,5 @@ const searchRouter = Router()
  * Query : {query : string, limit: string, page: string}
  * Headers : {Authorization : Bearer <access_token>}
  */
-searchRouter.get("/", accessTokenValidator, paginationValidator, searchValidator, wrapRequestHandler(searchController))
+searchRouter.get("/", searchValidator, wrapRequestHandler(searchController))
 export default searchRouter

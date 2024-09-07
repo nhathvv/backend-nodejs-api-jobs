@@ -10,7 +10,8 @@ const USERS_MESSAGES = {
   PASSWORD_LENGTH_MUST_BE_FROM_6_TO_50: 'Password length must be from 6 to 50',
   PASSWORD_MUST_BE_STRONG: 'Password must be strong',
   FULLNAME_LENGTH_MUST_BE_FROM_3_TO_100: 'Fullname length must be from 3 to 100',
-  MUST_BE_STRONG: 'Password must be at least 8 characters long, contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 symbol',
+  MUST_BE_STRONG:
+    'Password must be at least 8 characters long, contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 symbol',
   PASSWORD_CONFIRMATION_DOES_NOT_MATCH_PASSWORD: 'Password confirmation does not match password',
   USER_NOT_FOUND: 'User not found',
   REGISTER_SUCCESS: 'Register successfully',
@@ -25,7 +26,7 @@ const USERS_MESSAGES = {
   GET_JOB_SUCCESS: 'Get job successfully',
   SKILLS_MUST_BE_AN_ARRAY: 'Skills must be an array',
   SKILLS_MUST_BE_STRINGS: 'Skill must be string',
-  SKILL_NAME_MUST_BE_STRING : 'Skill name must be string',
+  SKILL_NAME_MUST_BE_STRING: 'Skill name must be string',
   UPDATE_JOB_SUCCESS: 'Update job successfully',
   DELETE_JOB_SUCCESS: 'Delete job successfully',
   GET_JOBS_SUCCESS: 'Get jobs successfully',
@@ -36,5 +37,7 @@ const USERS_MESSAGES = {
   STATUS_IS_INVALID: 'Status is invalid',
   TYPE_IS_INVALID: 'Type is invalid',
   JOB_NOT_FOUND: 'Job not found',
+  INVALID_CONTENT: 'Invalid content',
+  SEARCH_SUCCESS: 'Search successfully'
 }
 export default USERS_MESSAGES

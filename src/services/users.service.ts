@@ -212,7 +212,6 @@ class UserService {
       .toArray()
     return result
   }
-  async search({ content, page, limit, user_id }: { content: string; page: number; limit: number; user_id: string }) {}
 }
 const userService = new UserService()
 export default userService

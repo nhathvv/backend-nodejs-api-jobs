@@ -6,7 +6,6 @@ interface UserType {
   email: string
   password: string
   address?: string
-  companies_id?: ObjectId
   role?: Roles
   creator_id?: ObjectId
   avatar?: string
@@ -20,10 +19,8 @@ export class User {
   email: string
   password: string
   address: string
-  companies_id: ObjectId | null
   role: Roles
   phone?: string
-  creator_id: ObjectId | null
   avatar: string
   created_at: Date
   updated_at: Date
@@ -34,10 +31,8 @@ export class User {
     this.email = user.email
     this.password = user.password
     this.address = user.address || ""
-    ;(this.companies_id = user.companies_id || null),
-      (this.role = user.role || Roles.USER),
-      (this.creator_id = user.creator_id || null),
-      (this.avatar = user.avatar || "")
+    this.role = user.role || Roles.USER
+    this.avatar = user.avatar || ""
     this.phone = user.phone || ""
     this.created_at = user.created_at || date
     this.updated_at = user.updated_at || date

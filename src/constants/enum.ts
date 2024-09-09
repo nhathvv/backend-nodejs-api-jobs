@@ -1,6 +1,7 @@
 export enum Roles {
   USER,
-  CREATOR
+  CREATOR,
+  ADMIN
 }
 export enum Levels {
   INTERN = "INTERN",

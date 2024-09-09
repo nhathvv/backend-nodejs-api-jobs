@@ -121,10 +121,44 @@ class UserService {
           }
         },
         {
+          $lookup: {
+            from: "roles",
+            localField: "role",
+            foreignField: "role_id",
+            as: "role"
+          }
+        },
+        {
+          $addFields: {
+            role: {
+              $arrayElemAt: ["$role", 0]
+            }
+          }
+        },
+        {
+          $addFields: {
+            creator: {
+              $arrayElemAt: ["$creator", 0]
+            }
+          }
+        },
+        {
           $project: {
             password: 0,
-            role: 0,
-            creator_id: 0
+            creator_id: 0,
+            role: {
+              permissions: 0,
+              isActive: 0,
+              role_id: 0,
+              created_at: 0,
+              updated_at: 0
+            },
+            creator: {
+              user_id: 0,
+              created_at: 0,
+              updated_at: 0,
+              skills: 0
+            }
           }
         }
       ])

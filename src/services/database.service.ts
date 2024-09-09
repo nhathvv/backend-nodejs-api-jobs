@@ -5,6 +5,8 @@ import { Creator } from "~/models/schemas/Creators.schema"
 import { RefreshTokens } from "~/models/schemas/RefreshTokens.schema"
 import { Skill } from "~/models/schemas/Skills.schema"
 import { Job } from "~/models/schemas/Jobs.schema"
+import { Permission } from "~/models/schemas/Permissions.schema"
+import { Role } from "~/models/schemas/Roles.schema"
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster.xhm85.mongodb.net/?retryWrites=true&w=majority&appName=Cluster`
 class DatabaseService {
@@ -36,6 +38,12 @@ class DatabaseService {
   }
   get jobs(): Collection<Job> {
     return this.db.collection(process.env.DB_COLLECTION_JOB as string)
+  }
+  get permissions(): Collection<Permission> {
+    return this.db.collection(process.env.DB_COLLECTION_PERMISSION as string)
+  }
+  get roles(): Collection<Role> {
+    return this.db.collection(process.env.DB_COLLECTION_ROLE as string)
   }
 }
 

@@ -3,7 +3,6 @@ import { Job } from "~/models/schemas/Jobs.schema"
 import { JobReqBody } from "~/models/request/Jobs.request"
 import { ObjectId } from "mongodb"
 import userService from "./users.service"
-import { add } from "lodash"
 
 class JobService {
   async createJob(user_id: string, payload: JobReqBody) {

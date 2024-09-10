@@ -6,6 +6,10 @@ import USERS_MESSAGES from "~/constants/messages"
 import { hashPassword } from "~/utils/crypto"
 import databaseService from "~/services/database.service"
 import { Skill } from "~/models/request/Users.request"
+import { verifyToken } from "~/utils/jwt"
+import { ErrorWithStatus } from "~/models/Errors"
+import HTTP_STATUS from "~/constants/httpStatus"
+import { JsonWebTokenError } from "jsonwebtoken"
 
 export const registerValidator = validate(
   checkSchema(
@@ -164,6 +168,44 @@ export const accessTokenValidator = validate(
       }
     },
     ["headers"]
+  )
+)
+export const refreshTokenValidator = validate(
+  checkSchema(
+    {
+      refresh_token: {
+        custom: {
+          options: async (value: string, { req }) => {
+            if (!value) {
+              throw new ErrorWithStatus({
+                message: USERS_MESSAGES.REFRESH_TOKEN_IS_REQUIRED,
+                status: HTTP_STATUS.UNAUTHORIZED
+              })
+            }
+            try {
+              const [decoded_refresh_token, refresh_token] = await Promise.all([
+                verifyToken({ token: value, secretOrPublicKey: process.env.JWT_SECRET_REFRESH_TOKEN as string }),
+                databaseService.refreshTokens.findOne({ token: value })
+              ])
+              if (!refresh_token) {
+                throw new ErrorWithStatus({
+                  message: USERS_MESSAGES.REFRESH_TOKEN_NOT_EXITS,
+                  status: HTTP_STATUS.UNAUTHORIZED
+                })
+              }
+              req.decoded_refresh_token = decoded_refresh_token
+            } catch (error) {
+              throw new ErrorWithStatus({
+                message: (error as JsonWebTokenError).message,
+                status: HTTP_STATUS.UNAUTHORIZED
+              })
+            }
+            return true
+          }
+        }
+      }
+    },
+    ["body"]
   )
 )
 

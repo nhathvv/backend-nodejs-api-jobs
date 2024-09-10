@@ -14,7 +14,6 @@ export const createJobController = async (req: Request<ParamsDictionary, any, Jo
 export const updateJobController = async (req: Request<ParamsDictionary, any, JobReqBody>, res: Response) => {
   const user_id = req.decoded_authorization.user_id
   const job_id = req.params.jobId
-  console.log("REQ BODY", req.body)
   const data = await jobService.updateJob(user_id, job_id, req.body)
   return res.status(200).json({
     message: USERS_MESSAGES.UPDATE_JOB_SUCCESS,

@@ -246,6 +246,10 @@ class UserService {
       .toArray()
     return result
   }
+  async logout(refresh_token: string) {
+    const result = await databaseService.refreshTokens.deleteOne({ token: refresh_token })
+    return result
+  }
 }
 const userService = new UserService()
 export default userService

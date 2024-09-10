@@ -2,12 +2,14 @@ import { Router } from "express"
 import {
   getMeController,
   loginController,
+  logoutController,
   registerController,
   updateMeController
 } from "~/controllers/users.controller"
 import {
   accessTokenValidator,
   loginValidator,
+  refreshTokenValidator,
   registerValidator,
   updateMeValidator
 } from "~/middlewares/users.middleware"
@@ -42,4 +44,8 @@ userRouter.get("/me", accessTokenValidator, wrapRequestHandler(getMeController))
  * Body : {fullname: string, email: string, Level: Levels, Phone: string, Skills}
  */
 userRouter.patch("/me", accessTokenValidator, updateMeValidator, wrapRequestHandler(updateMeController))
+/**
+ * Description: Logout
+ */
+userRouter.post("/logout", accessTokenValidator, refreshTokenValidator, wrapRequestHandler(logoutController))
 export default userRouter

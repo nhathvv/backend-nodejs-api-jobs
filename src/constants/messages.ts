@@ -38,6 +38,8 @@ const USERS_MESSAGES = {
   TYPE_IS_INVALID: "Type is invalid",
   JOB_NOT_FOUND: "Job not found",
   INVALID_CONTENT: "Invalid content",
-  SEARCH_SUCCESS: "Search successfully"
+  SEARCH_SUCCESS: "Search successfully",
+  REFRESH_TOKEN_IS_REQUIRED: "Refresh token is required",
+  REFRESH_TOKEN_NOT_EXITS: "Refresh token not exists"
 }
 export default USERS_MESSAGES

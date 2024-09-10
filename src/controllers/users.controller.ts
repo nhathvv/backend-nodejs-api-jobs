@@ -2,7 +2,6 @@ import { Request, Response } from "express"
 import { ParamsDictionary } from "express-serve-static-core"
 import USERS_MESSAGES from "~/constants/messages"
 import { LoginReqBody, RegisterReqBody, UpdateMeReqBody } from "~/models/request/Users.request"
-import jobService from "~/services/jobs.service"
 
 import userService from "~/services/users.service"
 export const registerController = async (req: Request<ParamsDictionary, any, RegisterReqBody>, res: Response) => {
@@ -32,6 +31,14 @@ export const updateMeController = async (req: Request<ParamsDictionary, any, Upd
   const data = await userService.updateMe(user_id, req.body)
   return res.status(200).json({
     message: USERS_MESSAGES.UPDATE_ME_SUCCESS,
+    data
+  })
+}
+export const logoutController = async (req: Request, res: Response) => {
+  const refresh_token = req.body.refresh_token
+  const data = await userService.logout(refresh_token)
+  return res.status(200).json({
+    message: "Logout successfully",
     data
   })
 }

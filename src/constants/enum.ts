@@ -22,3 +22,9 @@ export enum JobTypes {
   FULLTIME = "FULLTIME",
   PARTTIME = "PARTTIME"
 }
+export enum ResumeStatus {
+  PENDING = "PENDING",
+  REVIEWING = "REVIEWING",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED"
+}

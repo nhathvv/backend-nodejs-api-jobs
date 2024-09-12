@@ -91,9 +91,14 @@ class UserService {
         token: refresh_token
       })
     )
+    const role = await databaseService.roles.findOne(
+      { role_id: user.role },
+      { projection: { permissions: 0, isActive: 0, role_id: 0, created_at: 0, updated_at: 0 } }
+    )
     return {
       access_token,
-      refresh_token
+      refresh_token,
+      role
     }
   }
   async getMe(user_id: string) {

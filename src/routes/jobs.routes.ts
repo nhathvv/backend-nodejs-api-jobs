@@ -7,7 +7,7 @@ import {
   updateJobController
 } from "~/controllers/jobs.controllers"
 import { accessTokenValidator } from "~/middlewares/users.middleware"
-import { JobIdValidator, JobReqValidator, paginationValidator } from "~/middlewares/jobs.middleware"
+import { paginationValidator } from "~/middlewares/jobs.middleware"
 import { wrapRequestHandler } from "~/utils/handlers"
 const jobRouter = Router()
 /**
@@ -48,5 +48,5 @@ jobRouter.get("/:jobId", accessTokenValidator, wrapRequestHandler(getJobByIDCont
  * Headers: {Authorization: Bearer access_token}
  * Query : page, limit
  */
-jobRouter.get("/", paginationValidator, accessTokenValidator, wrapRequestHandler(getJobsPaginationController))
+jobRouter.get("/", paginationValidator, wrapRequestHandler(getJobsPaginationController))
 export default jobRouter

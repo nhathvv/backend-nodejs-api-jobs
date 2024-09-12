@@ -7,6 +7,7 @@ import { Skill } from "~/models/schemas/Skills.schema"
 import { Job } from "~/models/schemas/Jobs.schema"
 import { Permission } from "~/models/schemas/Permissions.schema"
 import { Role } from "~/models/schemas/Roles.schema"
+import { Resumes } from "~/models/schemas/Resumes.schema"
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster.xhm85.mongodb.net/?retryWrites=true&w=majority&appName=Cluster`
 class DatabaseService {
@@ -44,6 +45,9 @@ class DatabaseService {
   }
   get roles(): Collection<Role> {
     return this.db.collection(process.env.DB_COLLECTION_ROLE as string)
+  }
+  get resumes(): Collection<Resumes> {
+    return this.db.collection(process.env.DB_COLLECTION_RESUME as string)
   }
 }
 

@@ -2,6 +2,7 @@ import { Router } from "express"
 import {
   getCreatorApplyByJobController,
   getJobApplyByCreatorController,
+  getResumeByIdController,
   resumesController,
   updateResumeController
 } from "~/controllers/resumes.controllers"
@@ -49,4 +50,11 @@ resumesRouter.get(
   resumesValidator,
   wrapRequestHandler(getCreatorApplyByJobController)
 )
+/**
+ * Description: get resume by id
+ * Path: /:resumeId
+ * Method: GET
+ * Headers: {Authorization: Bearer access_token}
+ */
+resumesRouter.get("/:resumeId", accessTokenValidator, wrapRequestHandler(getResumeByIdController))
 export default resumesRouter

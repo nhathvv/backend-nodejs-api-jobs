@@ -34,3 +34,11 @@ export const getCreatorApplyByJobController = async (req: Request, res: Response
     data
   })
 }
+export const getResumeByIdController = async (req: Request, res: Response) => {
+  const resume_id = req.params.resumeId
+  const data = await resumeService.getResumeById(resume_id)
+  return res.status(200).json({
+    message: "Get resume successfully",
+    data
+  })
+}

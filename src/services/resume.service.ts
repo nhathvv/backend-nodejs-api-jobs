@@ -145,6 +145,109 @@ class ResumeService {
       .toArray()
     return getCreatorApply || { _id: jobId, total: 0, creators: [] }
   }
+  async getResumeById(resume_id: string) {
+    const [resume] = await databaseService.resumes
+      .aggregate([
+        {
+          $match: {
+            _id: new ObjectId(resume_id)
+          }
+        },
+        {
+          $lookup: {
+            from: "creators",
+            localField: "creatorId",
+            foreignField: "user_id",
+            as: "creator"
+          }
+        },
+        {
+          $addFields: {
+            creator: {
+              $arrayElemAt: ["$creator", 0]
+            }
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "creator.user_id",
+            foreignField: "_id",
+            as: "creator.user"
+          }
+        },
+        {
+          $unwind: {
+            path: "$creator.user",
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        {
+          $lookup: {
+            from: "skills",
+            localField: "creator.skills",
+            foreignField: "_id",
+            as: "creator.skills"
+          }
+        },
+        {
+          $lookup: {
+            from: "jobs",
+            localField: "jobId",
+            foreignField: "_id",
+            as: "job"
+          }
+        },
+        {
+          $addFields: {
+            job: {
+              $arrayElemAt: ["$job", 0]
+            }
+          }
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "job.user",
+            foreignField: "_id",
+            as: "job.user"
+          }
+        },
+        {
+          $unwind: {
+            path: "$job.user",
+            preserveNullAndEmptyArrays: true
+          }
+        },
+        {
+          $lookup: {
+            from: "skills",
+            localField: "job.skills",
+            foreignField: "_id",
+            as: "job.skills"
+          }
+        },
+        {
+          $project: {
+            creatorId: 0,
+            jobId: 0,
+            "creator.user_id": 0,
+            "creator.createdAt": 0,
+            "creator.updated_at": 0,
+            "creator.updatedAt": 0,
+            "creator.user.password": 0,
+            "creator.user.role": 0,
+            "creator.user.creator_id": 0,
+            "creator.skill_id": 0,
+            "job.user.password": 0,
+            "job.user.role": 0,
+            "job.user.creator_id": 0
+          }
+        }
+      ])
+      .toArray()
+    return resume
+  }
 }
 const resumeService = new ResumeService()
 export default resumeService

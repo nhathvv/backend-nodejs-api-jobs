@@ -15,6 +15,7 @@ const resumesRouter = Router()
  * Path: /
  * Method: POST
  * Headers: {Authorization: Bearer access_token}
+ * Role: Creator
  */
 resumesRouter.post("/", accessTokenValidator, resumesValidator, wrapRequestHandler(resumesController))
 /**
@@ -23,6 +24,7 @@ resumesRouter.post("/", accessTokenValidator, resumesValidator, wrapRequestHandl
  * Method: PATCH
  * Headers: {Authorization: Bearer access_token}
  * Body: { status: string }
+ * Role: Admin && Creator
  */
 resumesRouter.patch(
   "/:resumeId",
@@ -35,6 +37,7 @@ resumesRouter.patch(
  * Path: /
  * Method: GET
  * Headers: {Authorization: Bearer access_token}
+ * Role: Creator
  */
 resumesRouter.get("/jobs", accessTokenValidator, wrapRequestHandler(getJobApplyByCreatorController))
 /**
@@ -43,6 +46,7 @@ resumesRouter.get("/jobs", accessTokenValidator, wrapRequestHandler(getJobApplyB
  * Method: GET
  * Headers: {Authorization: Bearer access_token}
  * Body: { jobId: string }
+ * Role: Admin
  */
 resumesRouter.get(
   "/creator",
@@ -55,6 +59,7 @@ resumesRouter.get(
  * Path: /:resumeId
  * Method: GET
  * Headers: {Authorization: Bearer access_token}
+ * Role: Admin && Creator
  */
 resumesRouter.get("/:resumeId", accessTokenValidator, wrapRequestHandler(getResumeByIdController))
 export default resumesRouter

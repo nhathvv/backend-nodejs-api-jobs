@@ -16,6 +16,7 @@ const jobRouter = Router()
  * Method : POST
  * Headers: {Authorization: Bearer access_token}
  * Body : JobReqBody
+ * Role: Client
  */
 jobRouter.post("/", accessTokenValidator, wrapRequestHandler(createJobController))
 /**
@@ -24,6 +25,7 @@ jobRouter.post("/", accessTokenValidator, wrapRequestHandler(createJobController
  * Method : PATCH
  * Headers: {Authorization: Bearer access_token}
  * Body : JobReqBody
+ * Role: Client && Admin
  */
 jobRouter.patch("/:jobId", accessTokenValidator, wrapRequestHandler(updateJobController))
 /**
@@ -31,6 +33,7 @@ jobRouter.patch("/:jobId", accessTokenValidator, wrapRequestHandler(updateJobCon
  * PATH : /:jobId
  * Method : DELETE
  * Headers: {Authorization: Bearer access_token}
+ * Role: Admin && Creator
  */
 jobRouter.delete("/:jobId", accessTokenValidator, wrapRequestHandler(deleteJobController))
 /**
@@ -39,6 +42,7 @@ jobRouter.delete("/:jobId", accessTokenValidator, wrapRequestHandler(deleteJobCo
  * Method : GET
  * Headers: {Authorization: Bearer access_token}
  * Response : Job
+ * Role: Admin && Creator
  */
 jobRouter.get("/:jobId", accessTokenValidator, wrapRequestHandler(getJobByIDController))
 /**
@@ -47,6 +51,7 @@ jobRouter.get("/:jobId", accessTokenValidator, wrapRequestHandler(getJobByIDCont
  * Method : GET
  * Headers: {Authorization: Bearer access_token}
  * Query : page, limit
+ * Role: Admin && Creator
  */
 jobRouter.get("/", paginationValidator, wrapRequestHandler(getJobsPaginationController))
 export default jobRouter

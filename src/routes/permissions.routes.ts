@@ -19,6 +19,7 @@ const permissionsRouter = Router()
  * Method: POST
  * Headers: {Authorization: Bearer access_token}
  * Body : PermissionReqBody
+ * Role: Admin
  */
 permissionsRouter.post(
   "/",
@@ -32,6 +33,7 @@ permissionsRouter.post(
  * Method: PATCH
  * Headers: {Authorization: Bearer access_token}
  * Body : PermissionReqBody
+ * Role: Admin
  */
 permissionsRouter.patch(
   "/:permissionId",
@@ -45,6 +47,7 @@ permissionsRouter.patch(
  * Method: DELETE
  * Headers: {Authorization: Bearer access_token}
  * Response: Permission
+ * Role: Admin
  */
 permissionsRouter.delete(
   "/:permissionId",
@@ -58,6 +61,7 @@ permissionsRouter.delete(
  * Method: GET
  * Headers: {Authorization: Bearer access_token}
  * Response: Permission
+ * Role: Admin
  */
 permissionsRouter.get(
   "/:permissionId",

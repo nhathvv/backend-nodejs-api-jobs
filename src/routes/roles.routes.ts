@@ -9,6 +9,7 @@ const rolesRouter = Router()
  * Path: /
  * Method: POST
  * Headers: {Authorization: Bearer access_token}
+ * Role: Admin
  */
 rolesRouter.post("/", accessTokenValidator, createRoleValidator, wrapRequestHandler(createRoleController))
 export default rolesRouter
